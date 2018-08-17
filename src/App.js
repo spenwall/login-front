@@ -8,15 +8,21 @@ import Error from './components/Admin';
 import Navigation from './components/Navigation';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticated(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100)
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100)
+const PermissionsContext = React.createContext();
+
+class PermissionsProvider extends Component {
+  state = {
+    loggedIn: false,
+    admin: false
+  }
+  render() {
+    return (
+      <PermissionsContext.provider value={{
+        state: this.state
+      }}>
+       {this.props.children}
+      </PermissionsContext.provider>
+    )
   }
 }
 
@@ -25,6 +31,12 @@ const AdminRoute = ({ component: Component, ...rest }) => (
     fakeAuth.isAuthenticated === true
     ? <Component {...props} />
     : <Redirect to='/login' />
+  )}/>
+)
+
+const LoginRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    loggedIn === false ? <Component {...props} /> : <Redirect to='/' />
   )}/>
 )
 
@@ -38,14 +50,16 @@ class App extends Component {
         </header>
         <div>
         <BrowserRouter>
-          <div>
-            <Navigation />
-            <Switch>
-              <Route path="/" component={Home} exact />
-              <Route path="/login" component={Login} />
-              <AdminRoute path="/admin" component={Admin} />
-              <Route component={Error} />
-            </Switch>
+          <div className="Content">
+            <PermissionsProvider>
+              <Navigation />
+              <Switch>
+                <Route path="/" component={Home} exact />
+                <LoginRoute path="/login" component={Login} />
+                <AdminRoute path="/admin" component={Admin} />
+                <Route component={Error} />
+              </Switch>
+            </PermissionsProvider>
           </div>
         </BrowserRouter>
         </div>
