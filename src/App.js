@@ -26,6 +26,8 @@ class PermissionsProvider extends Component {
   }
 }
 
+
+
 const AdminRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
     fakeAuth.isAuthenticated === true
@@ -36,7 +38,9 @@ const AdminRoute = ({ component: Component, ...rest }) => (
 
 const LoginRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    loggedIn === false ? <Component {...props} /> : <Redirect to='/' />
+    loggedIn === false 
+    ? <Component {...props} /> 
+    : <Redirect to='/' />
   )}/>
 )
 
