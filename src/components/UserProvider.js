@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
-
-export const UserContext = React.createContext();
+import AppContext from './Context';
 
 class UserProvider extends Component {
-  state = {
-    loggedIn: false,
-    admin: false
+  constructor(props) {
+    super(props);
+
+    this.updateLogin = (loginState) => {
+      this.setState({ loggedIn: loginState });
+    };
+
+    this.state = {
+      loggedIn: false,
+      updateLogin: this.updateLogin,
+    };
+
   }
+  
   render() {
     return (
-      <UserContext.Provider value="I'm the Value">
+      <AppContext.Provider value={{ state: this.state }}>
         {this.props.children}
-      </UserContext.Provider>
+      </AppContext.Provider>
     )
   }
 }

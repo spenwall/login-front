@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Auth from '../auth/auth';
 
 export function auth(data) {
     const accessData = {

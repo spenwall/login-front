@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-
-const MyContext = React.createContext();
+import AppContext from './Context';
 
 class Home extends Component {
   render() {
     return (
       <div>
-        <MyContext.Consumer>
-          {(context) => (
-            <React.Fragment>
-              <p>Logged In {context.state.loggedIn}</p>
-              <p>Permissions {context.state.loggedIn}</p>
-            </React.Fragment>
-          )}
-        </MyContext.Consumer>
+        <AppContext.Consumer>
+          {data => 
+          <div onClick={data.state.toggleLogin} >{
+                data.state.loggedIn ? 'You are Logged In' : 'You are not Logged In'
+              }
+          </div>}
+        </AppContext.Consumer>
       </div>
     );
   }
