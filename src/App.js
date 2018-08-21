@@ -7,7 +7,7 @@ import Error from './components/Admin';
 import Navigation from './components/Navigation';
 import Auth from './auth/auth';
 import Logout from './components/Logout';
-import UserProvider from './components/UserProvider';
+import { AuthProvider } from './components/AuthContext';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ class App extends Component {
 
   render() {
     return (
-      <UserProvider>
+      <AuthProvider>
         <BrowserRouter>
           <div className="Content">
               <Navigation />
@@ -54,7 +54,7 @@ class App extends Component {
               </div>
           </div>
         </BrowserRouter>
-        </UserProvider>
+        </AuthProvider>
     );
   }
 }

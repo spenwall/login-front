@@ -1,8 +1,28 @@
 import React, { Component } from "react";
 import { NavLink } from 'react-router-dom';
+import { AuthConsumer } from "./AuthContext";
 
 class Navigation extends Component {
+
   render() {
+
+    const loginButton = <p className="control">
+                          <NavLink className="button is-info" to='/login'>
+                            <span className="icon"><i className="fas fa-sign-in-alt"></i></span> <span>
+                              Login
+                            </span>
+                          </NavLink>
+                        </p>
+
+    const logoutButton = <p className="control">
+                            <NavLink className="button is-info" to='/logout'>
+                              <span className="icon"><i className="fas fa-sign-in-alt"></i></span> <span>
+                                Logout
+                              </span>
+                            </NavLink>
+                          </p>
+
+
     return (
       <div>
         <div className="navbar is-link">
@@ -23,20 +43,11 @@ class Navigation extends Component {
             </div>
             <div className="navbar-item">
               <div className="field is-grouped">
-                <p className="control">
-                  <NavLink className="button is-info" to='/Login'>
-                  <span className="icon"><i className="fas fa-sign-in-alt"></i></span> <span>
-                  Login
-                  </span>
-                  </NavLink>
-                </p> 
-                <p className="control">
-                  <NavLink className="button is-info" to='/Logout'>
-                  <span className="icon"><i className="fas fa-sign-in-alt"></i></span> <span>
-                  Logout
-                  </span>
-                  </NavLink>
-                </p>
+              <AuthConsumer>
+                { (context) => (
+                  context.state.loggedIn ? loginButton : logoutButton
+                )}
+              </AuthConsumer>
               </div>
             </div>
           </div>

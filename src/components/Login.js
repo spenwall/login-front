@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Auth from '../auth/auth';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
-import AppContext from './Context';
+import { AuthConsumer } from './AuthContext';
 
 const FormStyle = styled.form`
   padding: 20px
@@ -45,13 +45,11 @@ class Login extends Component {
     const { loggedIn } = this.state;
 
     if (loggedIn) {
-      return  <div>
-                <AppContext.Consumer>
-                  { (context) => context.state.updateLogin(true) }
-                </AppContext.Consumer>
-                <Redirect to='/' />
-              </div>
-      // return <Redirect to='/' />;
+      return  <AuthConsumer>
+                  { context => (
+                      context.state.logIn
+                  )}
+              </AuthConsumer>
     }
 
     return (
