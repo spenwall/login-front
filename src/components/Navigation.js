@@ -40,12 +40,13 @@ class Navigation extends Component {
           <div className="navbar-menu">
             <div className="navbar-start">  
               <NavLink className="navbar-item" to="/">Home</NavLink>
+              <NavLink className="navbar-item" to="/admin">Admin</NavLink>
             </div>
             <div className="navbar-item">
               <div className="field is-grouped">
               <AuthConsumer>
                 { (context) => (
-                  context.state.loggedIn ? logoutButton : loginButton
+                  context.state.loggedIn() ? logoutButton : loginButton
                 )}
               </AuthConsumer>
               </div>

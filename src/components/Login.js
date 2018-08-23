@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Auth from '../auth/auth';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { AuthConsumer } from './AuthContext';
@@ -16,34 +15,30 @@ class Login extends Component {
       password: '',
       errors: {},
       isLoading: false,
-      loggedIn: false
+      loggedIn: false,
+      error: false,
     }
   }
 
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({ [e.target.name]: e.target.value, error: false })
   }
 
   onSubmit = login => e => {
     e.preventDefault();
-    const myAuth = new Auth();
-    const loginResult = myAuth.login(this.state);
+    const loginResult = login(this.state);
     loginResult.then(
       success => {
-        console.log('onSubmit success', success);
-        this.setState( { loggedIn: true });
-        login();
+        this.setState({ loggedIn: true })
       },
       err =>  {
-        console.log('onSubmit error', err)
-
+        this.setState({ errors: err, error: true })
       }
     );
   }
 
   render() {
 
-    const { loggedIn } = this.state;
 
     const redirect = <Redirect to="/" />
 
@@ -55,7 +50,7 @@ class Login extends Component {
           <div className="field">
             <label className="label">Username</label>
             <div className="control has-icons-left has-icons-right">
-              <input className="input is-success"
+              <input className={`input ${this.state.error ? "is-danger" : "is-success"}`}
                     type="text" 
                     placeholder="username"
                     name="username"
@@ -68,11 +63,14 @@ class Login extends Component {
                 <i className="fas fa-check"></i>
               </span>
             </div>
+            {this.state.error
+            ? <p class="help is-danger">This email or password is invalid</p>
+            : ''}
           </div>
           <div className="field">
             <label className="label">Password</label>
             <div className="control has-icons-left has-icons-right">
-              <input className="input is-success"
+              <input className={`input ${this.state.error ? "is-danger" : "is-success"}`}
                     type="password" 
                     placeholder="password"
                     name="password"
@@ -99,7 +97,7 @@ class Login extends Component {
     return (
       <AuthConsumer>
           { context => (
-              context.state.loggedIn ? loginForm : redirect
+              this.state.loggedIn ? redirect : loginForm
           )}
       </AuthConsumer>
     );

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
-import Auth from '../auth/auth';
 import { AuthConsumer } from './AuthContext';
 
 class Logout extends Component {
@@ -15,8 +14,6 @@ class Logout extends Component {
 
   logout = (logout) => {
     logout();
-    const myAuth = new Auth();
-    myAuth.logout();
     this.setState({ loggedOut: true });
   }
 
@@ -24,9 +21,9 @@ class Logout extends Component {
     return (
       <AuthConsumer>
         { (context) => (
-          this.loggedOut
-          ? <Redirect to="/login" />
-          : <div onload={this.logout(context.state.logout)}></div>
+          context.state.loggedIn()
+          ? this.logout(context.state.logout)
+          : <Redirect to="/login" />
         )}
       </AuthConsumer>
     );

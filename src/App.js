@@ -5,36 +5,36 @@ import Home from './components/Home';
 import Admin from './components/Admin';
 import Error from './components/Admin';
 import Navigation from './components/Navigation';
-import Auth from './auth/auth';
 import Logout from './components/Logout';
-import { AuthProvider } from './components/AuthContext';
+import { AuthProvider, AuthConsumer } from './components/AuthContext';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-const myAuth = new Auth();
-
 const AdminRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    myAuth.isAuthenticated()
-    ? <Component {...props} />
-    : <Redirect to='/login' />
-  )}/>
+  <AuthConsumer>
+    { context => (
+      <Route {...rest} render={(props) => (
+        context.state.loggedIn()
+        ? <Component {...props} />
+        : <Redirect to='/login' />
+      )}/>
+    )}
+  </AuthConsumer>
 )
 
 const LoginRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    myAuth.loggedIn()
-    ? <Redirect to='/' />
-    : <Component {...props} /> 
-  )}/>
+  <AuthConsumer>
+    { context => (
+      <Route {...rest} render={(props) => (
+        context.state.loggedIn()
+        ? <Redirect to='/' />
+        : <Component {...props} /> 
+      )}/>
+    )}
+  </AuthConsumer>
 )
 
 class App extends Component {
-  state = {
-    loggedIn: false,
-    user: {}
-  }
-
   render() {
     return (
       <AuthProvider>

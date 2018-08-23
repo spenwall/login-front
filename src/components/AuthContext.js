@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 const AuthContext = React.createContext();
 
@@ -6,22 +7,37 @@ class AuthProvider extends Component {
   constructor(props) {
     super(props);
 
-    this.login = () => {
-      console.log('context logged in');
-      this.setState({ loggedIn: true });
-    }
-
     this.state = {
-      loggedIn: false,
+      loggedIn: this.loggedIn,
       login: this.login,
       logout: this.logout,
     };
 
   }
 
+  loggedIn = () => {
+    var accessToken = localStorage.getItem('access_token');
+    return accessToken !== null;
+  }
+
+  login = (data) => {
+    const accessData = {
+      grant_type: 'password',
+      client_id: 2,
+      client_secret: 'fxBmSbHWwSAetStRnmKAgCIpPWGefttWOWOTi0UB',
+      scope: '',
+    }
+    const requestData = Object.assign(data, accessData);
+    return axios.post('http://192.168.10.20/oauth/token', requestData).then(
+      (response) => { 
+        localStorage.setItem('access_token', response.data.access_token);
+        return response;
+      },
+    )
+  }
+
   logout = () => {
-    console.log('context logout');
-    this.setState({ loggedIn: false });
+    localStorage.removeItem('access_token');
   }
 
   

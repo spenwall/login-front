@@ -8,7 +8,7 @@ class Home extends Component {
         <AuthConsumer>
           {context => 
           <div onClick={context.state.login} >{
-                context.state.loggedIn ? 'You are Logged In' : 'You are not Logged In'
+                context.state.loggedIn() ? 'You are Logged In' : 'You are not Logged In'
               }
           </div>}
         </AuthConsumer>
