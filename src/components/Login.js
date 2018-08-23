@@ -26,9 +26,9 @@ class Login extends Component {
 
   onSubmit = login => e => {
     e.preventDefault();
-    const loginResult = login(this.state);
-    loginResult.then(
-      success => {
+    login(this.state).then(
+      response => {
+        console.log('the success in the login component', response);
         this.setState({ loggedIn: true })
       },
       err =>  {
@@ -64,7 +64,7 @@ class Login extends Component {
               </span>
             </div>
             {this.state.error
-            ? <p class="help is-danger">This email or password is invalid</p>
+            ? <p className="help is-danger">This email or password is invalid</p>
             : ''}
           </div>
           <div className="field">

@@ -38,23 +38,23 @@ class App extends Component {
   render() {
     return (
       <AuthProvider>
-        <BrowserRouter>
-          <div className="Content">
-              <Navigation />
-              <div className="column">
-                <div className="box column is-half is-offset-one-quarter">
-                  <Switch>
-                      <Route path="/" component={Home} exact />
-                      <LoginRoute path="/login" component={Login} />
-                      <Route path="/logout" component={Logout} />
-                      <AdminRoute path="/admin" component={Admin} />
-                      <Route component={Error} />
-                  </Switch>
+          <BrowserRouter>
+            <div className="Content">
+                <Navigation />
+                <div className="column">
+                  <div className="box column is-half is-offset-one-quarter">
+                    <Switch>
+                        <Route path="/" component={Home} exact />
+                        <LoginRoute path="/login" component={Login} />
+                        <Route path="/logout" component={Logout} />
+                        <AdminRoute path="/admin" component={Admin} />
+                        <Route component={Error} />
+                    </Switch>
+                  </div>
                 </div>
-              </div>
-          </div>
-        </BrowserRouter>
-        </AuthProvider>
+            </div>
+          </BrowserRouter>
+      </AuthProvider>
     );
   }
 }

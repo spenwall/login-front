@@ -1,11 +1,16 @@
 import React, { Component } from "react";
+import { AuthConsumer } from "./AuthContext";
 
 class Admin extends Component {
   render() {
     return (
-      <div>
-        <p>This is the Admin area</p>
-      </div>
+      <AuthConsumer>
+        { (context) => (
+          context.state.user.admin === '1'
+          ? <div>You are admin</div>
+          : <div>You are NOT admin</div>
+        )}
+      </AuthConsumer>
     );
   }
 }

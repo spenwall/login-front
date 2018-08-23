@@ -12,17 +12,12 @@ class Logout extends Component {
 
   }
 
-  logout = (logout) => {
-    logout();
-    this.setState({ loggedOut: true });
-  }
-
   render() {
     return (
       <AuthConsumer>
         { (context) => (
           context.state.loggedIn()
-          ? this.logout(context.state.logout)
+          ? context.state.logout()
           : <Redirect to="/login" />
         )}
       </AuthConsumer>

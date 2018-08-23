@@ -9,6 +9,8 @@ class AuthProvider extends Component {
 
     this.state = {
       loggedIn: this.loggedIn,
+      user: {},
+      spencer: 'spencer',
       login: this.login,
       logout: this.logout,
     };
@@ -30,14 +32,28 @@ class AuthProvider extends Component {
     const requestData = Object.assign(data, accessData);
     return axios.post('http://192.168.10.20/oauth/token', requestData).then(
       (response) => { 
+        console.log('success in auth request');
         localStorage.setItem('access_token', response.data.access_token);
-        return response;
-      },
+        const header = {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + response.data.access_token
+        }
+        return axios.get('http://192.168.10.20/api/user', {headers: header}).then(
+          (userResponse) => {
+            console.log('success in user request');
+            console.log('spencer? ', this.state.spencer);
+            this.setState({ user: userResponse.data, spencer: 'actually Steve' });
+            console.log('user', this.state.user);
+            return userResponse
+          }
+        )
+      }
     )
   }
 
   logout = () => {
     localStorage.removeItem('access_token');
+    this.setState({ user: {} });
   }
 
   
