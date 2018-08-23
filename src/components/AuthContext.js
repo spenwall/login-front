@@ -20,6 +20,7 @@ class AuthProvider extends Component {
   }
 
   logout = () => {
+    console.log('context logout');
     this.setState({ loggedIn: false });
   }
 

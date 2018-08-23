@@ -45,7 +45,7 @@ class Navigation extends Component {
               <div className="field is-grouped">
               <AuthConsumer>
                 { (context) => (
-                  context.state.loggedIn ? loginButton : logoutButton
+                  context.state.loggedIn ? logoutButton : loginButton
                 )}
               </AuthConsumer>
               </div>
