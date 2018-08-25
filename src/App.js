@@ -14,9 +14,9 @@ const AdminRoute = ({ component: Component, ...rest }) => (
   <AuthConsumer>
     { context => (
       <Route {...rest} render={(props) => (
-        context.state.loggedIn()
+        context.state.isAdmin()
         ? <Component {...props} />
-        : <Redirect to='/login' />
+        : <Redirect to='/' />
       )}/>
     )}
   </AuthConsumer>

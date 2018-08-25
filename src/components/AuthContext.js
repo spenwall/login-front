@@ -13,12 +13,13 @@ class AuthProvider extends Component {
       spencer: 'spencer',
       login: this.login,
       logout: this.logout,
+      isAdmin: this.isAdmin,
     };
 
   }
 
   loggedIn = () => {
-    var accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('access_token');
     return accessToken !== null;
   }
 
@@ -51,9 +52,31 @@ class AuthProvider extends Component {
     )
   }
 
+  loadUser = () => {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken !== null) {
+      const header = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
+      return axios.get('http://192.168.10.20/api/user', {headers: header}).then(
+        (userResponse) => {
+          this.setState({ user: userResponse.data });
+        }
+      )
+    }
+  }
+
   logout = () => {
     localStorage.removeItem('access_token');
     this.setState({ user: {} });
+  }
+
+  isAdmin = () => {
+    if ( Object.keys(this.state.user).length === 0) {
+      this.loadUser();
+    }
+    return this.state.user.admin === '1';
   }
 
   

@@ -24,13 +24,14 @@ class Navigation extends Component {
 
 
     return (
+      <AuthConsumer>
+                { (context) => (
       <div>
         <div className="navbar is-link">
         <div className="navbar-brand">
-          <a className="navbar-item" href="https://bulma.io">
+          <div className="navbar-item">
             <img src="https://bulma.io/images/bulma-logo-white.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" />
-          </a>
-
+          </div>
           <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -40,20 +41,21 @@ class Navigation extends Component {
           <div className="navbar-menu">
             <div className="navbar-start">  
               <NavLink className="navbar-item" to="/">Home</NavLink>
-              <NavLink className="navbar-item" to="/admin">Admin</NavLink>
+              {context.state.isAdmin() 
+                ? <NavLink className="navbar-item" to="/admin">Admin</NavLink>
+                : ''
+              }
             </div>
             <div className="navbar-item">
               <div className="field is-grouped">
-              <AuthConsumer>
-                { (context) => (
-                  context.state.loggedIn() ? logoutButton : loginButton
-                )}
-              </AuthConsumer>
+                  {context.state.loggedIn() ? logoutButton : loginButton}
               </div>
             </div>
           </div>
         </div>
       </div>
+      )}
+      </AuthConsumer>
     );
   }
 }
