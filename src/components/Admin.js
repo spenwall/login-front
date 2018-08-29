@@ -7,7 +7,11 @@ class Admin extends Component {
     super(props);
 
     this.state = {
-      users:  {}
+      users:  [],
+      first: '',
+      next: '',
+      last: '',
+      prev: '',
     }
 
   }
@@ -35,12 +39,29 @@ class Admin extends Component {
   }
 
   render() {
+    const users = this.state.users 
+    ? this.state.users.map((user, i) => {
+     return <div>
+              <div className="card">
+                <div className="card-header">
+                  <div className="card-header-title">
+                    {user.name}
+                  </div>
+                </div>
+                <div className="card-content">
+                  User information
+                </div>
+              </div>
+            </div>
+    }) 
+    : '';
+
     return (
       <AuthConsumer>
         { (context) => (
           context.state.user.admin === '1'
-          ? <div>You are admin</div>
-          : <div>You are NOT admin</div>
+          ? <div>You are NOT admin</div>
+          : users
         )}
       </AuthConsumer>
     );
