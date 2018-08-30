@@ -41,7 +41,7 @@ class Admin extends Component {
   render() {
     const users = this.state.users 
     ? this.state.users.map((user, i) => {
-     return <div>
+     return <div key={user.id}>
               <div className="card">
                 <div className="card-header">
                   <div className="card-header-title">
@@ -49,7 +49,8 @@ class Admin extends Component {
                   </div>
                 </div>
                 <div className="card-content">
-                  User information
+                  {user.email}
+                  {user.admin}
                 </div>
               </div>
             </div>
@@ -59,7 +60,7 @@ class Admin extends Component {
     return (
       <AuthConsumer>
         { (context) => (
-          context.state.user.admin === '1'
+          context.state.user.admin === 'admin'
           ? <div>You are NOT admin</div>
           : users
         )}

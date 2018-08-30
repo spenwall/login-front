@@ -26,7 +26,7 @@ class AuthProvider extends Component {
     const accessData = {
       grant_type: 'password',
       client_id: 2,
-      client_secret: 'OfMak14j9OEQi4Bpmby3dvd7yJwKkItUgZgcFnts',
+      client_secret: 'SpY0ht8wEoEfwLt1HP1JnDMuqW2lHp5TRjt4wuAr',
       scope: '',
     }
     const requestData = Object.assign(data, accessData);
