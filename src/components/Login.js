@@ -26,13 +26,14 @@ class Login extends Component {
 
   onSubmit = login => e => {
     e.preventDefault();
+    this.setState({isLoading: true})
     login(this.state).then(
       response => {
         console.log('the success in the login component', response);
-        this.setState({ loggedIn: true })
+        this.setState({ loggedIn: true, isLoading: false })
       },
       err =>  {
-        this.setState({ errors: err, error: true })
+        this.setState({ errors: err, error: true, isLoading: false })
       }
     );
   }
@@ -86,7 +87,7 @@ class Login extends Component {
           </div>
           <div className="field is-grouped">
             <div className="control">
-              <button className="button is-link" disabled={this.isLoading}>Login</button>
+              <button className={`button is-link ${this.state.isLoading ? "is-loading" : ""}`} disabled={this.state.isLoading}>Login</button>
             </div>
           </div>
       </FormStyle>  
