@@ -30,3 +30,25 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.userTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.userImage {
+  margin-right: 5px;
+}
+
+.pageButton {
+  margin: 5px;
+}
+
+.userCard {
+  margin-bottom: 10px;
+}

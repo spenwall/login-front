@@ -27,7 +27,7 @@ class AuthProvider extends Component {
     const accessData = {
       grant_type: 'password',
       client_id: 2,
-      client_secret: 'fxBmSbHWwSAetStRnmKAgCIpPWGefttWOWOTi0UB',
+      client_secret: 'L0Cw5EEp2g2uELQchB7ucqQn9ePUVMrDlW17Fyzg',
       scope: '',
     }
     const requestData = Object.assign(data, accessData);
@@ -76,7 +76,7 @@ class AuthProvider extends Component {
     if ( Object.keys(this.state.user).length === 0) {
       this.loadUser();
     }
-    return this.state.user.admin === '1';
+    return this.state.user.role === 'admin';
   }
 
   
