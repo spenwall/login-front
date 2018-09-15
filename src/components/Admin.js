@@ -3,6 +3,7 @@ import { AuthConsumer } from "./AuthContext";
 import axios from "axios";
 import Pagination from "./Pagination";
 import Users from "./Users";
+import { passportAddress } from '../config';
 
 class Admin extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Admin extends Component {
     
   }
 
-  getUsers = (address = "http://192.168.10.20/api/users") => {
+  getUsers = (address = "http://"+passportAddress+"/api/users") => {
     const header = {
       Authorization: "Bearer " + localStorage.getItem("access_token"),
       Accept: "application/json"

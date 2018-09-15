@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { passportAddress } from '../config';
 
 class User extends Component {
     constructor(props) {
@@ -22,6 +23,10 @@ class User extends Component {
       this.setState({ edit: true })
     }
 
+    cancel = () => {
+      this.setState({ edit: false })
+    }
+
     save = () => {
       this.setState({ loading: true })
       console.log('Started from the bottom');
@@ -31,7 +36,7 @@ class User extends Component {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       }
-      axios.put('http://192.168.10.20/api/user/' + this.props.user.id, 
+      axios.put('http://'+passportAddress+'/api/user/' + this.props.user.id, 
                 {name: this.state.name, role: this.state.role }, 
                 {headers: header}
         ).then(() => {
@@ -64,8 +69,8 @@ class User extends Component {
                     <div>
                       {this.state.edit
                         ? <div>
-                            <button className={`button is-info ${this.state.loading ? "is-loading" : ""}`} onClick={this.save}>Save</button>
-                            <button className="button is-warning">Cancel</button>
+                            <button className={`button is-info mr-2 ${this.state.loading ? "is-loading" : ""}`} onClick={this.save}>Save</button>
+                            <button className="button is-warning"  onClick={this.cancel}>Cancel</button>
                           </div>
                         : <button className="button is-link" onClick={this.update} >Update</button>
                       }

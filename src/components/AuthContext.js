@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { passportAddress, clientSecret } from '../config';
 
 const AuthContext = React.createContext();
 
@@ -27,11 +28,11 @@ class AuthProvider extends Component {
     const accessData = {
       grant_type: 'password',
       client_id: 2,
-      client_secret: 'L0Cw5EEp2g2uELQchB7ucqQn9ePUVMrDlW17Fyzg',
+      client_secret: clientSecret,
       scope: '',
     }
     const requestData = Object.assign(data, accessData);
-    return axios.post('http://192.168.10.20/oauth/token', requestData).then(
+    return axios.post('http://'+passportAddress+'/oauth/token', requestData).then(
       (response) => { 
         console.log('success in auth request');
         localStorage.setItem('access_token', response.data.access_token);
@@ -39,7 +40,7 @@ class AuthProvider extends Component {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + response.data.access_token
         }
-        return axios.get('http://192.168.10.20/api/user', {headers: header}).then(
+        return axios.get('http://'+passportAddress+'/api/user', {headers: header}).then(
           (userResponse) => {
             console.log('success in user request');
             console.log('spencer? ', this.state.spencer);
@@ -59,7 +60,7 @@ class AuthProvider extends Component {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       }
-      return axios.get('http://192.168.10.20/api/user', {headers: header}).then(
+      return axios.get('http://'+passportAddress+'/api/user', {headers: header}).then(
         (userResponse) => {
           this.setState({ user: userResponse.data });
         }
