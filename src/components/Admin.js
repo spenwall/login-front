@@ -21,7 +21,7 @@ class Admin extends Component {
     
   }
 
-  getUsers = (address = "http://"+passportAddress+"/api/users") => {
+  getUsers = (address = passportAddress+"/api/users") => {
     const header = {
       Authorization: "Bearer " + localStorage.getItem("access_token"),
       Accept: "application/json"

@@ -36,7 +36,7 @@ class User extends Component {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       }
-      axios.put('http://'+passportAddress+'/api/user/' + this.props.user.id, 
+      axios.put(passportAddress+'/api/user/' + this.props.user.id, 
                 {name: this.state.name, role: this.state.role }, 
                 {headers: header}
         ).then(() => {

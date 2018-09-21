@@ -32,7 +32,7 @@ class AuthProvider extends Component {
       scope: '',
     }
     const requestData = Object.assign(data, accessData);
-    return axios.post('http://'+passportAddress+'/oauth/token', requestData).then(
+    return axios.post(passportAddress+'/oauth/token', requestData).then(
       (response) => { 
         console.log('success in auth request');
         localStorage.setItem('access_token', response.data.access_token);
@@ -40,7 +40,7 @@ class AuthProvider extends Component {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + response.data.access_token
         }
-        return axios.get('http://'+passportAddress+'/api/user', {headers: header}).then(
+        return axios.get(passportAddress+'/api/user', {headers: header}).then(
           (userResponse) => {
             console.log('success in user request');
             console.log('spencer? ', this.state.spencer);
@@ -60,7 +60,7 @@ class AuthProvider extends Component {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       }
-      return axios.get('http://'+passportAddress+'/api/user', {headers: header}).then(
+      return axios.get(passportAddress+'/api/user', {headers: header}).then(
         (userResponse) => {
           this.setState({ user: userResponse.data });
         }
